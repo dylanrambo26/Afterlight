@@ -31,7 +31,7 @@ public class LaserEmitter : MonoBehaviour
                 layerMask
             );
             
-            if (hit.collider == null)
+            if (hit.collider ==null)
             {
                 points.Add(origin + direction * maxDistance);
                 break;
