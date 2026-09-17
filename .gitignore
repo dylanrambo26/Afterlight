@@ -108,3 +108,7 @@ InitTestScene*.unity*
 
 #Jetbrains
 .idea/
+
+#Unity Recovery
+/[Aa]ssets/_Recovery/
+/[Aa]ssets/_Recovery.meta

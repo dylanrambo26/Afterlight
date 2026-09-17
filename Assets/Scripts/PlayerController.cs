@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour
     private PlayerInput inputActions;
     private Vector2 moveInput;
     private Rigidbody2D rb;
+    
+    [SerializeField]
+    private Mirror currentMirror;
 
     private void Awake()
     {
@@ -18,10 +21,12 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         inputActions.Player.Enable();
+        inputActions.Player.Interact.performed += OnInteract;
     }
 
     private void OnDisable()
     {
+        inputActions.Player.Interact.performed -= OnInteract;
         inputActions.Player.Disable();
     }
 
@@ -33,5 +38,27 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         rb.linearVelocity = moveInput * moveSpeed;
+    }
+
+    public void SetCurrentMirror(Mirror mirror)
+    {
+        currentMirror = mirror;
+        
+    }
+
+    public void ClearCurrentMirror(Mirror mirror)
+    {
+        if (currentMirror == mirror)
+        {
+            currentMirror = null;
+        }
+    }
+
+    private void OnInteract(InputAction.CallbackContext context)
+    {
+        if (currentMirror != null)
+        {
+            currentMirror.Rotate();
+        }
     }
 }
