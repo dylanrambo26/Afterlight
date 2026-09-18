@@ -9,7 +9,7 @@ public class LaserEmitter : MonoBehaviour
     private int maxReflections = 10;
 
     // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
         CalculateLaserPath();
     }
@@ -42,6 +42,12 @@ public class LaserEmitter : MonoBehaviour
             {
                 receiver.Activate();
                 print("hit receiver");
+                break;
+            }
+
+            if (hit.collider.TryGetComponent<PlayerController>(out _))
+            {
+                GameManager.Instance?.ResetCurrentLevel();
                 break;
             }
             

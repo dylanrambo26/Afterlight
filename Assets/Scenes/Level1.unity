@@ -919,7 +919,7 @@ MonoBehaviour:
   maxDistance: 100
   layerMask:
     serializedVersion: 2
-    m_Bits: 448
+    m_Bits: 1472
   lineRenderer: {fileID: 891764327}
 --- !u!120 &891764327
 LineRenderer:
@@ -1542,6 +1542,51 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &2089093167
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2089093169}
+  - component: {fileID: 2089093168}
+  m_Layer: 0
+  m_Name: GameManagerBootstrap
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2089093168
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089093167}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ed35c3e122eea34f94f0b90a7eaad90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameBootstrap
+  gameManagerPrefab: {fileID: 5290282170890928424, guid: b295ce5d7b063f54cb353f25a28e244e, type: 3}
+--- !u!4 &2089093169
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2089093167}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.6237, y: -0.46433, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2099649793
 GameObject:
   m_ObjectHideFlags: 0
@@ -1555,7 +1600,7 @@ GameObject:
   - component: {fileID: 2099649796}
   - component: {fileID: 2099649798}
   - component: {fileID: 2099649797}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Robot
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1844,3 +1889,4 @@ SceneRoots:
   - {fileID: 334615333}
   - {fileID: 2099649795}
   - {fileID: 353583059}
+  - {fileID: 2089093169}

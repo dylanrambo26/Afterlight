@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+
 public class PlayerController : MonoBehaviour
 { 
     [SerializeField] private float moveSpeed = 5f;
@@ -23,12 +25,14 @@ public class PlayerController : MonoBehaviour
         inputActions.Player.Enable();
         inputActions.Player.RotateLeft.performed += OnRotateLeft;
         inputActions.Player.RotateRight.performed += OnRotateRight;
+        inputActions.Player.Reset.performed += OnReset;
     }
 
     private void OnDisable()
     {
         inputActions.Player.RotateLeft.performed -= OnRotateLeft;
         inputActions.Player.RotateRight.performed -= OnRotateRight;
+        inputActions.Player.Reset.performed -= OnReset;
         inputActions.Player.Disable();
     }
 
@@ -71,4 +75,13 @@ public class PlayerController : MonoBehaviour
             currentMirror.RotateRight();
         }
     }
+
+    private void OnReset(InputAction.CallbackContext context)
+    {
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.ResetCurrentLevel();
+        }
+    }
+    
 }

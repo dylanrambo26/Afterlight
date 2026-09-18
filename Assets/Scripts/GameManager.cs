@@ -31,4 +31,9 @@ public class GameManager : MonoBehaviour
         CurrentLevel = level;
         SceneManager.LoadScene(level);
     }
+
+    public void ResetCurrentLevel()
+    {
+        LoadLevel(SceneManager.GetActiveScene().buildIndex);
+    }
 }
