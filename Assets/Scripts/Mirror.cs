@@ -6,11 +6,10 @@ public class Mirror : MonoBehaviour
     private float rotateSpeed = 90f;
     private Quaternion originalRotation;
     private Quaternion targetRotation;
-    private float rotationAmount = 45f;
 
 
-    private int rotationStep = 0;
-    private bool isRotating = false;
+    private int rotationStep;
+    private bool isRotating;
     
     private void Awake()
     {
@@ -18,16 +17,24 @@ public class Mirror : MonoBehaviour
         targetRotation = originalRotation;
     }
 
-    public void Rotate()
+    public void RotateLeft()
+    {
+        Rotate(-45f);
+    }
+
+    public void RotateRight()
+    {
+        Rotate(45f);
+    }
+    
+    private void Rotate(float angle)
     {
         if (isRotating)
         {
             return;
         }
-
-        rotationStep = (rotationStep + 1) % 8;
-
-        targetRotation = originalRotation * Quaternion.Euler(0f, 0f, rotationStep * rotationAmount);
+        
+        targetRotation = transform.rotation * Quaternion.Euler(0f, 0f, angle);
         StartCoroutine(RotateMirror());
     }
 

@@ -21,12 +21,14 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         inputActions.Player.Enable();
-        inputActions.Player.Interact.performed += OnInteract;
+        inputActions.Player.RotateLeft.performed += OnRotateLeft;
+        inputActions.Player.RotateRight.performed += OnRotateRight;
     }
 
     private void OnDisable()
     {
-        inputActions.Player.Interact.performed -= OnInteract;
+        inputActions.Player.RotateLeft.performed -= OnRotateLeft;
+        inputActions.Player.RotateRight.performed -= OnRotateRight;
         inputActions.Player.Disable();
     }
 
@@ -54,11 +56,19 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnInteract(InputAction.CallbackContext context)
+    private void OnRotateLeft(InputAction.CallbackContext context)
     {
         if (currentMirror != null)
         {
-            currentMirror.Rotate();
+            currentMirror.RotateLeft();
+        }
+    }
+    
+    private void OnRotateRight(InputAction.CallbackContext context)
+    {
+        if (currentMirror != null)
+        {
+            currentMirror.RotateRight();
         }
     }
 }
