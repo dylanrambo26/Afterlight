@@ -41,7 +41,6 @@ public class LaserEmitter : MonoBehaviour
             if (hit.collider.TryGetComponent<LaserReceiver>(out var receiver))
             {
                 receiver.Activate();
-                print("hit receiver");
                 break;
             }
 

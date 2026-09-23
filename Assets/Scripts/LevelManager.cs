@@ -5,25 +5,38 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField]
     private LaserReceiver[] requiredReceivers;
+
+    private Door door;
     
     void Start()
     {
-        foreach (var receiver in requiredReceivers)
+        foreach (LaserReceiver receiver in requiredReceivers)
         {
-            receiver.onActivated.AddListener(CheckLevelComplete);
+            receiver.onStateChanged.AddListener(CheckReceivers);
         }
+        
+        door = GameObject.FindGameObjectWithTag("Door").GetComponent<Door>();
+        door.onOpened.AddListener(CompleteLevel);
+        
+        CheckReceivers();
     }
 
-    private void CheckLevelComplete()
+    private void CheckReceivers()
     {
         foreach (var receiver in requiredReceivers)
         {
             if (!receiver.IsActivated)
             {
+                door.Lock();
                 return;
             }
-            
-            GameManager.Instance.GoToNextLevel();
         }
+        
+        door.Unlock();
+    }
+
+    private void CompleteLevel()
+    {
+        GameManager.Instance.GoToNextLevel();
     }
 }
