@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -11,9 +12,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
 
     private Door currentDoor;
-    
-    [SerializeField]
-    private Mirror currentMirror;
+
+    private readonly HashSet<Mirror> nearbyMirrors = new();
 
     private void Awake()
     {
@@ -49,18 +49,46 @@ public class PlayerController : MonoBehaviour
         rb.linearVelocity = moveInput * moveSpeed;
     }
 
-    public void SetCurrentMirror(Mirror mirror)
+    public void AddNearbyMirror(Mirror mirror)
     {
-        currentMirror = mirror;
-        
+        if(mirror != null)
+        {
+            nearbyMirrors.Add(mirror);
+        }
     }
 
-    public void ClearCurrentMirror(Mirror mirror)
+    public void RemoveNearbyMirror(Mirror mirror)
     {
-        if (currentMirror == mirror)
+        nearbyMirrors.Remove(mirror);
+    }
+
+    private Mirror GetNearbyMirror()
+    {
+        Mirror closestMirror = null;
+        float closestDistance = float.MaxValue;
+
+        foreach (Mirror mirror in nearbyMirrors)
         {
-            currentMirror = null;
+            if (mirror == null)
+            {
+                continue;
+            }
+            
+            float distance = (mirror.transform.position - transform.position).sqrMagnitude;
+
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestMirror = mirror;
+                closestMirror.isClosestMirror = true;
+            }
+            else
+            {
+                closestMirror.isClosestMirror = false;
+            }
         }
+        
+        return closestMirror;
     }
 
     public void SetDoor(Door door)
@@ -75,17 +103,19 @@ public class PlayerController : MonoBehaviour
 
     private void OnRotateLeft(InputAction.CallbackContext context)
     {
-        if (currentMirror != null)
+        Mirror mirror = GetNearbyMirror();
+        if (mirror != null)
         {
-            currentMirror.RotateLeft();
+            mirror.RotateLeft();
         }
     }
     
     private void OnRotateRight(InputAction.CallbackContext context)
     {
-        if (currentMirror != null)
+        Mirror mirror = GetNearbyMirror();
+        if (mirror != null)
         {
-            currentMirror.RotateRight();
+            mirror.RotateRight();
         }
     }
 

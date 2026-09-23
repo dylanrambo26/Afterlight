@@ -6,12 +6,18 @@ public class LaserReceiver : MonoBehaviour
 {
     public UnityEvent onStateChanged;
     private Door door;
+
+    public Material receiverOff;
+    public Material receiverOn;
+    
+    private Renderer receiverRenderer;
     
     public bool IsActivated { get; private set; }
 
     private void Awake()
     {
         door = GameObject.FindGameObjectWithTag("Door").GetComponent<Door>();
+        receiverRenderer = GetComponent<Renderer>();
     }
 
     public void Activate()
@@ -22,6 +28,7 @@ public class LaserReceiver : MonoBehaviour
         }
         IsActivated = true;
         onStateChanged.Invoke();
+        receiverRenderer.material = receiverOn;
     }
 
     public void Deactivate()
@@ -33,5 +40,6 @@ public class LaserReceiver : MonoBehaviour
         
         IsActivated = false;
         onStateChanged.Invoke();
+        receiverRenderer.material = receiverOff;
     }
 }

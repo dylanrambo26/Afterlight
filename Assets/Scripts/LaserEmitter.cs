@@ -6,6 +6,8 @@ public class LaserEmitter : MonoBehaviour
     [SerializeField] private float maxDistance = 25f;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private LineRenderer lineRenderer;
+    [SerializeField] private Vector2 originDirection;
+    
     private int maxReflections = 10;
 
     // Update is called once per frame
@@ -19,7 +21,7 @@ public class LaserEmitter : MonoBehaviour
         List<Vector3> points = new List<Vector3>();
         
         Vector2 origin = transform.position;
-        Vector2 direction = Vector2.right;
+        Vector2 direction = originDirection;
         
         points.Add(origin);
 

@@ -152,6 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97d321bec160054a949620278b121ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Mirror
+  mirrorRenderer: {fileID: 0}
+  selectedMaterial: {fileID: 2100000, guid: 4f8ec8beafa78ab4ea9ca05f30259268, type: 2}
+  unselectedMaterial: {fileID: 2100000, guid: 94ceca2b37dd5be45b671d34b5f9419b, type: 2}
 --- !u!1 &3482285530243793810
 GameObject:
   m_ObjectHideFlags: 0

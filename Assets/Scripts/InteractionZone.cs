@@ -19,13 +19,11 @@ public class InteractionZone : MonoBehaviour
 
         if (mirror != null)
         {
-            print("mirror exists");
-            playerController.SetCurrentMirror(mirror);
+            playerController.AddNearbyMirror(mirror);
         }
 
         if (door != null)
         {
-            print("door exists");
             playerController.SetDoor(door);
         }
     }
@@ -37,7 +35,7 @@ public class InteractionZone : MonoBehaviour
 
         if (mirror != null)
         {
-            playerController.ClearCurrentMirror(mirror);
+            playerController.RemoveNearbyMirror(mirror);
         }
 
         if (door != null)

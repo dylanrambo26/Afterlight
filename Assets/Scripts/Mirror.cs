@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -6,15 +7,37 @@ public class Mirror : MonoBehaviour
     private float rotateSpeed = 90f;
     private Quaternion originalRotation;
     private Quaternion targetRotation;
+    
+    public bool isClosestMirror = false;
 
-
+    private Renderer mirrorRenderer;
+    
+    [SerializeField]
+    private Material selectedMaterial;
+    
+    [SerializeField]
+    private Material unselectedMaterial;
+    
     private int rotationStep;
     private bool isRotating;
-    
+
+    private void FixedUpdate()
+    {
+        if (isClosestMirror)
+        {
+            mirrorRenderer.material = selectedMaterial;
+        }
+        else
+        {
+            mirrorRenderer.material = unselectedMaterial;
+        }
+    }
+
     private void Awake()
     {
         originalRotation = transform.rotation;
         targetRotation = originalRotation;
+        mirrorRenderer = GetComponent<Renderer>();
     }
 
     public void RotateLeft()
