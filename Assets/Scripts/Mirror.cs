@@ -21,16 +21,9 @@ public class Mirror : MonoBehaviour
     private int rotationStep;
     private bool isRotating;
 
-    private void FixedUpdate()
+    public void SetSelected(bool selected)
     {
-        if (isClosestMirror)
-        {
-            mirrorRenderer.material = selectedMaterial;
-        }
-        else
-        {
-            mirrorRenderer.material = unselectedMaterial;
-        }
+        mirrorRenderer.sharedMaterial = selected ? selectedMaterial : unselectedMaterial;
     }
 
     private void Awake()
@@ -38,6 +31,8 @@ public class Mirror : MonoBehaviour
         originalRotation = transform.rotation;
         targetRotation = originalRotation;
         mirrorRenderer = GetComponent<Renderer>();
+        
+        SetSelected(false);
     }
 
     public void RotateLeft()

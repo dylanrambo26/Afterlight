@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,43 @@ public class LaserEmitter : MonoBehaviour
     private void FixedUpdate()
     {
         CalculateLaserPath();
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.magenta;
+
+        Vector2 origin = transform.position;
+        Vector2 direction = originDirection.normalized;
+        
+        for(int i = 0; i < maxReflections; i++)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(
+                origin,
+                direction,
+                maxDistance,
+                layerMask
+            );
+
+            if (hit.collider == null)
+            {
+                Vector2 endPoint = origin + direction * maxDistance;
+                Gizmos.DrawLine(origin, endPoint);
+                break;
+            }
+            
+            Gizmos.DrawLine(origin, hit.point);
+            
+            Gizmos.DrawSphere(hit.point, 0.08f);
+
+            if (!hit.collider.CompareTag("Mirror"))
+            {
+                break;
+            }
+            
+            direction = Vector2.Reflect(direction, hit.normal);
+            origin = hit.point + direction * 0.01f;
+        }
     }
 
     private void CalculateLaserPath()

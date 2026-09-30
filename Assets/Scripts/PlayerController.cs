@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
 
     private Door currentDoor;
+    private Mirror closestMirror;
 
     private readonly HashSet<Mirror> nearbyMirrors = new();
 
@@ -32,6 +33,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnDisable()
     {
+        closestMirror?.SetSelected(false);
+        closestMirror = null;
+        
         inputActions.Player.RotateLeft.performed -= OnRotateLeft;
         inputActions.Player.RotateRight.performed -= OnRotateRight;
         inputActions.Player.Reset.performed -= OnReset;
@@ -42,6 +46,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         moveInput = inputActions.Player.Move.ReadValue<Vector2>();
+        UpdateClosestMirror();
     }
 
     private void FixedUpdate()
@@ -62,9 +67,9 @@ public class PlayerController : MonoBehaviour
         nearbyMirrors.Remove(mirror);
     }
 
-    private Mirror GetNearbyMirror()
+    private void UpdateClosestMirror()
     {
-        Mirror closestMirror = null;
+        Mirror newClosestMirror = null;
         float closestDistance = float.MaxValue;
 
         foreach (Mirror mirror in nearbyMirrors)
@@ -79,16 +84,17 @@ public class PlayerController : MonoBehaviour
             if (distance < closestDistance)
             {
                 closestDistance = distance;
-                closestMirror = mirror;
-                closestMirror.isClosestMirror = true;
-            }
-            else
-            {
-                closestMirror.isClosestMirror = false;
+                newClosestMirror = mirror;
             }
         }
-        
-        return closestMirror;
+
+        if (newClosestMirror == closestMirror)
+            return;
+
+        closestMirror?.SetSelected(false);
+
+        closestMirror = newClosestMirror;
+        closestMirror?.SetSelected(true);
     }
 
     public void SetDoor(Door door)
@@ -103,19 +109,17 @@ public class PlayerController : MonoBehaviour
 
     private void OnRotateLeft(InputAction.CallbackContext context)
     {
-        Mirror mirror = GetNearbyMirror();
-        if (mirror != null)
+        if (closestMirror != null)
         {
-            mirror.RotateLeft();
+            closestMirror.RotateLeft();
         }
     }
     
     private void OnRotateRight(InputAction.CallbackContext context)
     {
-        Mirror mirror = GetNearbyMirror();
-        if (mirror != null)
+        if (closestMirror != null)
         {
-            mirror.RotateRight();
+            closestMirror.RotateRight();
         }
     }
 
