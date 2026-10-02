@@ -23,6 +23,11 @@ public class LevelManager : MonoBehaviour
 
     private void CheckReceivers()
     {
+        if (requiredReceivers == null || requiredReceivers.Length == 0)
+        {
+            Debug.LogError($"No required receivers assigned in {gameObject.name}", this);
+        }
+        
         foreach (var receiver in requiredReceivers)
         {
             if (!receiver.IsActivated)

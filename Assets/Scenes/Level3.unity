@@ -521,6 +521,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9205282347048430914, guid: e4319715eb75ae546b37a51ba723b01f, type: 3}
+      propertyPath: requiredReceivers.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9205282347048430914, guid: e4319715eb75ae546b37a51ba723b01f, type: 3}
+      propertyPath: 'requiredReceivers.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1538578842}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1029,6 +1037,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f70649c4589c6144a881a7b7a50616f1, type: 3}
+--- !u!114 &1538578842 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1974905705996734990, guid: f70649c4589c6144a881a7b7a50616f1, type: 3}
+  m_PrefabInstance: {fileID: 1538578841}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7ee1b9661d60a449b846c54d5bc7e02, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LaserReceiver
 --- !u!1001 &1704488163
 PrefabInstance:
   m_ObjectHideFlags: 0
