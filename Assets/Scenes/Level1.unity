@@ -1214,6 +1214,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: LaserEmitter
       objectReference: {fileID: 0}
+    - target: {fileID: 5300642219560229951, guid: 38daa355b423bc448add4ad35de28b8e, type: 3}
+      propertyPath: originDirection.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8837514149582245941, guid: 38daa355b423bc448add4ad35de28b8e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.65

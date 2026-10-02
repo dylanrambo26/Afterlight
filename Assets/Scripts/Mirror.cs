@@ -19,10 +19,12 @@ public class Mirror : MonoBehaviour
     private Material unselectedMaterial;
     
     private int rotationStep;
-    private bool isRotating;
+    public bool isRotating;
 
     public void SetSelected(bool selected)
     {
+        if (mirrorRenderer == null)
+            return;
         mirrorRenderer.sharedMaterial = selected ? selectedMaterial : unselectedMaterial;
     }
 
@@ -37,12 +39,12 @@ public class Mirror : MonoBehaviour
 
     public void RotateLeft()
     {
-        Rotate(-45f);
+        Rotate(45f);
     }
 
     public void RotateRight()
     {
-        Rotate(45f);
+        Rotate(-45f);
     }
     
     private void Rotate(float angle)

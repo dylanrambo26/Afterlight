@@ -33,7 +33,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnDisable()
     {
-        closestMirror?.SetSelected(false);
+        if (closestMirror != null)
+        {
+            closestMirror.SetSelected(false);
+        }
         closestMirror = null;
         
         inputActions.Player.RotateLeft.performed -= OnRotateLeft;

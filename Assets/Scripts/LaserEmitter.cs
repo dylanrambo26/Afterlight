@@ -94,9 +94,13 @@ public class LaserEmitter : MonoBehaviour
             {
                 break;
             }
-            direction = Vector2.Reflect(direction, hit.normal);
 
+            if (!hit.collider.TryGetComponent<Mirror>(out var mirror)) continue;
+            if (mirror.isRotating) continue;
+            
+            direction = Vector2.Reflect(direction, hit.normal);
             origin = hit.point + direction * 0.01f;
+
         }
 
         lineRenderer.positionCount = points.Count;
