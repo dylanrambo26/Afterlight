@@ -15,11 +15,16 @@ public class PlayerController : MonoBehaviour
     private Mirror closestMirror;
 
     private readonly HashSet<Mirror> nearbyMirrors = new();
+    private Camera _camera;
+    
+    private Collider2D playerCollider;
 
     private void Awake()
     {
+        _camera = Camera.main;
         rb = GetComponent<Rigidbody2D>();
         inputActions = new PlayerInput();
+        playerCollider = GetComponent<Collider2D>();
     }
 
     private void OnEnable()
@@ -52,9 +57,40 @@ public class PlayerController : MonoBehaviour
         UpdateClosestMirror();
     }
 
+    private void ClampToScreen()
+    {
+        Vector2 bottomLeft = _camera.ViewportToWorldPoint(
+            new Vector3(0f, 0f, 0f)
+        );
+
+        Vector2 topRight = _camera.ViewportToWorldPoint(
+            new Vector3(1f, 1f, 0f)
+        );
+
+        float halfWidth = playerCollider.bounds.extents.x;
+        float halfHeight = playerCollider.bounds.extents.y;
+
+        Vector2 position = rb.position;
+
+        position.x = Mathf.Clamp(
+            position.x,
+            bottomLeft.x + halfWidth,
+            topRight.x - halfWidth
+        );
+
+        position.y = Mathf.Clamp(
+            position.y,
+            bottomLeft.y + halfHeight,
+            topRight.y - halfHeight
+        );
+
+        rb.position = position;
+    }
+
     private void FixedUpdate()
     {
         rb.linearVelocity = moveInput * moveSpeed;
+        ClampToScreen();
     }
 
     public void AddNearbyMirror(Mirror mirror)
