@@ -11,6 +11,8 @@ public class LaserEmitter : MonoBehaviour
     
     private int maxReflections = 10;
 
+    private HashSet<LaserReceiver> currentReceivers = new();
+
     // Update is called once per frame
     private void FixedUpdate()
     {
@@ -57,6 +59,8 @@ public class LaserEmitter : MonoBehaviour
     private void CalculateLaserPath()
     {
         List<Vector3> points = new List<Vector3>();
+
+        HashSet<LaserReceiver> newReceivers = new();
         
         Vector2 origin = transform.position;
         Vector2 direction = originDirection;
@@ -80,7 +84,8 @@ public class LaserEmitter : MonoBehaviour
 
             if (hit.collider.TryGetComponent<LaserReceiver>(out var receiver))
             {
-                receiver.Activate();
+                newReceivers.Add(receiver);
+                receiver.Activate(this);
                 break;
             }
 
@@ -100,8 +105,17 @@ public class LaserEmitter : MonoBehaviour
             
             direction = Vector2.Reflect(direction, hit.normal);
             origin = hit.point + direction * 0.01f;
-
         }
+
+        foreach (LaserReceiver receiver in currentReceivers)
+        {
+            if (!newReceivers.Contains(receiver))
+            {
+                receiver.Deactivate(this);
+            }
+        }
+
+        currentReceivers = newReceivers;
 
         lineRenderer.positionCount = points.Count;
         lineRenderer.SetPositions(points.ToArray());
