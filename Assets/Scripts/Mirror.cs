@@ -11,30 +11,27 @@ public class Mirror : MonoBehaviour
     public bool isClosestMirror = false;
 
     private Renderer mirrorRenderer;
+    [SerializeField] private Transform reflector;
+    [SerializeField] private GameObject selectionIndicator;
     
-    [SerializeField]
+    /*[SerializeField]
     private Material selectedMaterial;
     
     [SerializeField]
-    private Material unselectedMaterial;
+    private Material unselectedMaterial;*/
     
     private int rotationStep;
     public bool isRotating;
 
     public void SetSelected(bool selected)
     {
-        if (mirrorRenderer == null)
-            return;
-        mirrorRenderer.sharedMaterial = selected ? selectedMaterial : unselectedMaterial;
+        selectionIndicator.SetActive(selected);
     }
 
     private void Awake()
     {
-        originalRotation = transform.rotation;
+        originalRotation = reflector.rotation;
         targetRotation = originalRotation;
-        mirrorRenderer = GetComponent<Renderer>();
-        
-        SetSelected(false);
     }
 
     public void RotateLeft()
@@ -54,17 +51,17 @@ public class Mirror : MonoBehaviour
             return;
         }
         
-        targetRotation = transform.rotation * Quaternion.Euler(0f, 0f, angle);
+        targetRotation = reflector.localRotation * Quaternion.Euler(0f, 0f, angle);
         StartCoroutine(RotateMirror());
     }
 
     private IEnumerator RotateMirror()
     {
         isRotating = true;
-        while (Quaternion.Angle(transform.rotation, targetRotation) > 0.1f)
+        while (Quaternion.Angle(reflector.localRotation, targetRotation) > 0.1f)
         {
-            transform.rotation = Quaternion.RotateTowards(
-                transform.rotation,
+            reflector.localRotation = Quaternion.RotateTowards(
+                reflector.localRotation,
                 targetRotation,
                 rotateSpeed * Time.deltaTime
             );
@@ -72,7 +69,7 @@ public class Mirror : MonoBehaviour
             yield return null;
         }
 
-        transform.rotation = targetRotation;
+        reflector.localRotation = targetRotation;
         isRotating = false;
     }
 }

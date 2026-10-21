@@ -15,8 +15,9 @@ public class InteractionZone : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.TryGetComponent<PlayerController>(out var playerController))
+        {
             return;
-
+        }
         if (mirror != null)
         {
             playerController.AddNearbyMirror(mirror);

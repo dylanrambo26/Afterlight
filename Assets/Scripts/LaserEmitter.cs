@@ -56,6 +56,7 @@ public class LaserEmitter : MonoBehaviour
         }
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     private void CalculateLaserPath()
     {
         List<Vector3> points = new List<Vector3>();
@@ -100,7 +101,11 @@ public class LaserEmitter : MonoBehaviour
                 break;
             }
 
-            if (!hit.collider.TryGetComponent<Mirror>(out var mirror)) continue;
+            Mirror mirror = hit.collider.GetComponentInParent<Mirror>();
+            if (mirror == null)
+            {
+                break;
+            }
             if (mirror.isRotating) continue;
             
             direction = Vector2.Reflect(direction, hit.normal);
