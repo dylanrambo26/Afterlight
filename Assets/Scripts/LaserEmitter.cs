@@ -8,6 +8,7 @@ public class LaserEmitter : MonoBehaviour
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private Vector2 originDirection;
+    [SerializeField] private Vector2 originOffset;
     
     private int maxReflections = 10;
 
@@ -23,7 +24,7 @@ public class LaserEmitter : MonoBehaviour
     {
         Gizmos.color = Color.magenta;
 
-        Vector2 origin = transform.position;
+        Vector2 origin = new Vector2(transform.position.x + originOffset.x, transform.position.y + originOffset.y);
         Vector2 direction = originDirection.normalized;
         
         for(int i = 0; i < maxReflections; i++)
@@ -63,7 +64,7 @@ public class LaserEmitter : MonoBehaviour
 
         HashSet<LaserReceiver> newReceivers = new();
         
-        Vector2 origin = transform.position;
+        Vector2 origin = new Vector2(transform.position.x + originOffset.x, transform.position.y + originOffset.y);
         Vector2 direction = originDirection;
         
         points.Add(origin);

@@ -6,20 +6,12 @@ using UnityEngine.Events;
 public class LaserReceiver : MonoBehaviour
 {
     public UnityEvent onStateChanged;
-
-    public Material receiverOff;
-    public Material receiverOn;
     
-    private Renderer receiverRenderer;
+    public GameObject lensGameObject;
 
     private HashSet<LaserEmitter> activeEmitters = new();
     
     public bool IsActivated { get; private set; }
-
-    private void Awake()
-    {
-        receiverRenderer = GetComponent<Renderer>();
-    }
 
     public void Activate(LaserEmitter emitter)
     {
@@ -32,7 +24,7 @@ public class LaserReceiver : MonoBehaviour
         
         IsActivated = true;
         onStateChanged.Invoke();
-        receiverRenderer.material = receiverOn;
+        lensGameObject.SetActive(true);
     }
 
     public void Deactivate(LaserEmitter emitter)
@@ -52,6 +44,6 @@ public class LaserReceiver : MonoBehaviour
         
         IsActivated = false;
         onStateChanged.Invoke();
-        receiverRenderer.material = receiverOff;
+        lensGameObject.SetActive(false);
     }
 }

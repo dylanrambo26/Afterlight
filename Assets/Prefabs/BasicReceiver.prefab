@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1974905705996734990}
   - component: {fileID: 3334845890793674899}
   m_Layer: 7
-  m_Name: Receiver
+  m_Name: BasicReceiver
   m_TagString: Receiver
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
