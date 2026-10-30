@@ -11,6 +11,8 @@ public class LaserReceiver : MonoBehaviour
 
     private HashSet<LaserEmitter> activeEmitters = new();
     
+    [SerializeField] private PowerCable powerCable;
+    
     public bool IsActivated { get; private set; }
 
     public void Activate(LaserEmitter emitter)
@@ -23,6 +25,7 @@ public class LaserReceiver : MonoBehaviour
         }
         
         IsActivated = true;
+        powerCable.SetPowered(true);
         onStateChanged.Invoke();
         lensGameObject.SetActive(true);
     }
@@ -43,6 +46,7 @@ public class LaserReceiver : MonoBehaviour
         }
         
         IsActivated = false;
+        powerCable.SetPowered(false);
         onStateChanged.Invoke();
         lensGameObject.SetActive(false);
     }
